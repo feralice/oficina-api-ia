@@ -1,0 +1,23 @@
+{
+  "name": "oficina-api-ia",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Oficina: back-end Node.js com IA (spec-driven + segurança)",
+  "scripts": {
+    "dev:1": "node --watch step-1-crud/src/server.js",
+    "dev:2": "node --watch step-2-inseguro/src/server.js",
+    "dev:3": "node --watch step-3-seguro/src/server.js",
+    "test:1": "node --test step-1-crud/test/tasks.test.js",
+    "test:2": "node --test step-2-inseguro/test/tasks.test.js",
+    "test:3": "node --test step-3-seguro/test/tasks.test.js",
+    "demo": "node scripts/demo.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "zod": "^3.24.1"
+  }
+}
