@@ -50,18 +50,22 @@ Tente sozinho antes de abrir a próxima.
 <details>
 <summary>Nível 2: em qual arquivo mexer</summary>
 
-- Validação e campos permitidos: `src/controllers/tasks.controller.js` (e, se quiser, um `src/schemas.js` com Zod, que já está instalado)
-- Dono do recurso: `src/services/tasks.service.js` (as funções `get`, `update` e `remove` não olham o `userId`)
+São só 2 arquivos. Não precisa mexer no service.
+
+- Título sem limite, dono da tarefa e campos que não deviam entrar: `src/controllers/tasks.controller.js`
 - Erro que vaza: `src/middleware/error-handler.js`
+
+Cada conserto é uma ou duas linhas.
 
 </details>
 
 <details>
 <summary>Nível 3: o que fazer</summary>
 
-- Nas funções `get`, `update` e `remove`, receba o `userId` e só ache a tarefa se `t.userId === userId`. Se não achar, o controller já devolve 404. Lembre de passar `req.user.id` do controller pro service.
-- Não faça `Object.assign(task, req.body)` nem `...data`. Pegue só `title` e `done`, e valide: title com 1 a 100 caracteres, done boolean. Com Zod, `z.object({...})` já descarta campos extras.
-- No error handler, não devolva `err.stack`. Devolva uma mensagem fixa e deixe o detalhe só no `console.error`. JSON quebrado chega com `err.type === 'entity.parse.failed'` e deve virar 400.
+- **Título:** no `create`, o `if` só confere se o title existe. Faça ele conferir também se tem mais de 100 caracteres (`.length`).
+- **Dono da tarefa:** no `get`, `update` e `remove`, o `if (!task)` só confere se a tarefa existe. Faça ele dar 404 também quando `task.userId` for diferente de `req.user.id`. É a mesma mudança nos 3 lugares.
+- **Campos que não deviam entrar:** no `create`, o `done` e o dono (`userId`) vêm do `req.body`, então o cliente escolhe. Toda tarefa nova começa com `done: false` e o dono é sempre `req.user.id`. No `update`, apague a linha que deixa o cliente trocar o `userId`.
+- **Erro que vaza:** no error handler, tire o `stack` da resposta.
 
 </details>
 

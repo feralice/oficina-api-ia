@@ -4,23 +4,25 @@ export function createTasksService() {
 
   return {
     listByUser: (userId) => tasks.filter((t) => t.userId === userId),
-    get: (id) => tasks.find((t) => t.id === id), // IDOR: não olha o dono
-    create: (userId, data) => {
-      // mass assignment: espalha o body inteiro na tarefa
-      const task = { id: String(nextId++), done: false, userId, ...data };
+    get: (id) => tasks.find((t) => t.id === id),
+    create: (data) => {
+      const task = {
+        id: String(nextId++),
+        title: data.title,
+        done: data.done,
+        userId: data.userId,
+      };
       tasks.push(task);
       return task;
     },
-    update: (id, data) => {
-      const task = tasks.find((t) => t.id === id);
-      if (!task) return undefined;
-      return Object.assign(task, data); // mass assignment
+    update: (task, changes) => {
+      if (changes.title !== undefined) task.title = changes.title;
+      if (changes.done !== undefined) task.done = changes.done;
+      if (changes.userId !== undefined) task.userId = changes.userId;
+      return task;
     },
-    remove: (id) => {
-      const index = tasks.findIndex((t) => t.id === id);
-      if (index === -1) return false;
-      tasks.splice(index, 1);
-      return true;
+    remove: (task) => {
+      tasks.splice(tasks.indexOf(task), 1);
     },
   };
 }
