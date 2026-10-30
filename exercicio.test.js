@@ -1,7 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { once } from 'node:events';
-import { createApp } from '../src/app.js';
+// Avisa o exercicio.js pra não subir o servidor: o teste sobe o seu próprio.
+process.env.NODE_ENV = 'test';
+const { createApp } = await import('./exercicio.js');
 
 // Usuários de mentira: "1" e "2"
 async function start(t) {

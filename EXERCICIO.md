@@ -1,25 +1,17 @@
-# Sua vez: ache e conserte (step 2)
+# Sua vez: ache e conserte
 
-O step 2 é uma API de tarefas com bugs de segurança, e os testes mostram onde eles estão.
+O `exercicio.js` é uma API de tarefas com 4 bugs de segurança, e os testes mostram onde eles estão.
 
-**Objetivo:** deixar o `npm run test:2` 100% verde (10 de 10), mexendo só nos arquivos de `step-2-inseguro/src`. Os testes não podem ser alterados.
-
-## Antes de começar
-
-- Você já rodou `npm install` e o `npm run test:1` passou (veja o [README](README.md)).
-- No VSCode, abra a pasta **raiz** do projeto (`oficina-api-ia`), não a pasta do step. Os comandos `npm run` só funcionam a partir da raiz.
+**Objetivo:** deixar o `npm test` 100% verde (10 de 10), mexendo só no `exercicio.js`. Não mude os testes.
 
 ## Passo a passo
 
-1. Rode `npm run test:2`. No fim da saída devem aparecer `# pass 4` e `# fail 6`.
-2. Procure as linhas que começam com `not ok`. Cada uma é um teste falhando, e o nome já diz o que a API deveria fazer.
-3. Abra `step-2-inseguro/test/tasks.test.js` e leia o teste que falha: o que ele manda pra API e o que ele espera de volta.
-4. (Opcional) Veja o ataque acontecendo: rode `npm run dev:2` num terminal e `npm run demo` em outro.
-5. Com as 5 perguntas abaixo, ache o trecho do código em `step-2-inseguro/src` que causa a falha.
-6. Conserte um problema por vez e rode `npm run test:2` de novo. O número de `fail` tem que cair.
-7. Repita até aparecer `# fail 0`.
-
-Se mexer num arquivo e algo que passava começar a falhar, desfaça a última mudança (`Ctrl+Z`) e tente de outro jeito.
+1. Rode `npm test`. No fim devem aparecer `# pass 4` e `# fail 6`.
+2. Procure as linhas que começam com `not ok`. O nome de cada teste diz o que a API deveria fazer.
+3. (Opcional) Veja o ataque: `npm run dev` num terminal e `npm run demo` em outro.
+4. Abra o `exercicio.js` e ache a linha que causa a falha. Use as 5 perguntas abaixo.
+5. Conserte um bug por vez e rode `npm test` de novo. O número de `fail` tem que cair.
+6. Repita até aparecer `# fail 0`.
 
 ## As 5 perguntas
 
@@ -48,12 +40,12 @@ Tente sozinho antes de abrir a próxima.
 </details>
 
 <details>
-<summary>Nível 2: em qual arquivo mexer</summary>
+<summary>Nível 2: em qual parte do arquivo</summary>
 
-São só 2 arquivos. Não precisa mexer no service.
-
-- Título sem limite, dono da tarefa e campos que não deviam entrar: `src/controllers/tasks.controller.js`
-- Erro que vaza: `src/middleware/error-handler.js`
+- Título sem limite: na rota `app.post`
+- Dono da tarefa: nas rotas `app.get('/tasks/:id')`, `app.patch` e `app.delete`
+- Campos que não deviam entrar: na rota `app.post` e na `app.patch`
+- Erro que vaza: no último `app.use`, no fim do arquivo
 
 Cada conserto é uma ou duas linhas.
 
@@ -62,13 +54,13 @@ Cada conserto é uma ou duas linhas.
 <details>
 <summary>Nível 3: o que fazer</summary>
 
-- **Título:** no `create`, o `if` só confere se o title existe. Faça ele conferir também se tem mais de 100 caracteres (`.length`).
-- **Dono da tarefa:** no `get`, `update` e `remove`, o `if (!task)` só confere se a tarefa existe. Faça ele dar 404 também quando `task.userId` for diferente de `req.user.id`. É a mesma mudança nos 3 lugares.
-- **Campos que não deviam entrar:** no `create`, o `done` e o dono (`userId`) vêm do `req.body`, então o cliente escolhe. Toda tarefa nova começa com `done: false` e o dono é sempre `req.user.id`. No `update`, apague a linha que deixa o cliente trocar o `userId`.
-- **Erro que vaza:** no error handler, tire o `stack` da resposta.
+- **Título:** no `app.post`, o `if` só confere se o title existe. Faça ele conferir também se tem mais de 100 caracteres (`.length`).
+- **Dono da tarefa:** no `get`, `patch` e `delete`, o `if (!task)` só confere se a tarefa existe. Faça ele dar 404 também quando `task.userId` for diferente de `req.userId`. É a mesma mudança nos 3 lugares.
+- **Campos que não deviam entrar:** no `app.post`, o `done` e o dono (`userId`) vêm do `req.body`, então o cliente escolhe. Toda tarefa nova começa com `done: false` e o dono é sempre `req.userId`. No `app.patch`, apague a linha que deixa o cliente trocar o `userId`.
+- **Erro que vaza:** no último `app.use`, tire o `stack` da resposta.
 
 </details>
 
 ## Terminou?
 
-Compare com `step-3-seguro`. A sua solução não precisa ser igual, só passar nos testes. Depois rode `npm run dev:2` e `npm run demo` de novo: os ataques devem ser barrados.
+Rode `npm run dev` e `npm run demo` de novo: os ataques devem ser barrados. Depois compare com o `solucao.js`, onde cada conserto está marcado com `CONSERTO`.

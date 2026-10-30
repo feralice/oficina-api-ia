@@ -1,5 +1,5 @@
 // Demo dos ataques. Funciona em Windows, Mac e Linux (usa fetch, sem curl).
-// 1) suba um step:  npm run dev:2   (ou dev:3)
+// 1) suba a API:  npm run dev   (ou npm run solucao)
 // 2) em outro terminal:  npm run demo
 const base = `http://localhost:${process.env.PORT || 3000}`;
 
