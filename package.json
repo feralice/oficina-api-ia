@@ -5,8 +5,10 @@
   "type": "module",
   "description": "Oficina: back-end Node.js com IA (spec-driven + segurança)",
   "scripts": {
-    "dev": "node --watch exercicio.js",
+    "test:minha-api": "node --test minha-api/tasks.test.js",
+    "dev:minha-api": "node --watch minha-api/src/server.js",
     "test": "node --test exercicio.test.js",
+    "dev": "node --watch exercicio.js",
     "demo": "node demo.mjs",
     "solucao": "node --watch solucao.js"
   },
@@ -14,6 +16,7 @@
     "node": ">=20"
   },
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "zod": "^3.25.76"
   }
 }

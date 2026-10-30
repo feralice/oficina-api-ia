@@ -1,6 +1,6 @@
 # Sua vez: ache e conserte
 
-O `exercicio.js` é uma API de tarefas com 4 bugs de segurança, e os testes mostram onde eles estão.
+O `exercicio.js` é a mesma API de tarefas da parte 1, agora com usuários e 4 bugs de segurança. Os testes mostram onde eles estão.
 
 **Objetivo:** deixar o `npm test` 100% verde (10 de 10), mexendo só no `exercicio.js`. Não mude os testes.
 
