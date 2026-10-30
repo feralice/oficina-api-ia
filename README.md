@@ -27,7 +27,7 @@ npm install
 
 A pasta `minha-api` é um esqueleto: as 3 camadas (rota, controller e service) estão vazias, com um comentário dizendo o que pedir pra IA.
 
-1. Rode `npm run test:minha-api`. Os 7 testes falham, porque a API ainda não existe.
+1. Rode `npm run test:minha-api`. 6 testes falham (só o do 404 passa), porque a API ainda não tem rota nenhuma.
 2. Abra o `minha-api/PROMPT.md`, copie o prompt e cole na IA junto com os arquivos que ele pede.
 3. Cole o que a IA devolver nos 3 arquivos de `minha-api/src`.
 4. Rode `npm run test:minha-api` de novo. Deu 7 de 7? A IA fez o que a spec pede.

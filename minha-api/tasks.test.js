@@ -64,7 +64,9 @@ test('GET /tasks/:id inexistente retorna 404', async (t) => {
 
 test('PATCH /tasks/:id atualiza a tarefa', async (t) => {
   const call = await start(t);
-  const { body: task } = await call('POST', '/tasks', { title: 'antes' });
+  const criada = await call('POST', '/tasks', { title: 'antes' });
+  assert.equal(criada.status, 201, 'primeiro o POST /tasks precisa funcionar');
+  const task = criada.body;
   const res = await call('PATCH', `/tasks/${task.id}`, { done: true });
   assert.equal(res.status, 200);
   assert.equal(res.body.done, true);
@@ -72,7 +74,9 @@ test('PATCH /tasks/:id atualiza a tarefa', async (t) => {
 
 test('DELETE /tasks/:id remove a tarefa', async (t) => {
   const call = await start(t);
-  const { body: task } = await call('POST', '/tasks', { title: 'apagar' });
+  const criada = await call('POST', '/tasks', { title: 'apagar' });
+  assert.equal(criada.status, 201, 'primeiro o POST /tasks precisa funcionar');
+  const task = criada.body;
   const res = await call('DELETE', `/tasks/${task.id}`);
   assert.equal(res.status, 204);
   const after = await call('GET', `/tasks/${task.id}`);
