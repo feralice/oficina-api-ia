@@ -19,12 +19,12 @@ async function start(t) {
       body: body === undefined ? undefined : JSON.stringify(body),
     });
     const text = await res.text();
-    // Rota que ainda não existe devolve HTML: vira body null e o teste falha no status, que é mais claro.
-    let body = null;
+    // Rota que ainda não existe devolve HTML: vira json null e o teste falha no status, que é mais claro.
+    let json = null;
     try {
-      body = text ? JSON.parse(text) : null;
+      json = text ? JSON.parse(text) : null;
     } catch {}
-    return { status: res.status, body };
+    return { status: res.status, body: json };
   };
 }
 
