@@ -1,6 +1,6 @@
 # oficina-api-ia
 
-Material da oficina de back-end Node.js com IA (spec-driven + segurança).
+Material da oficina de back-end Node.js com IA (spec-driven + segurança). Links e mapa dos arquivos: [LINKS.md](LINKS.md).
 Uma API de tarefas em Express, com dados em memória e sem banco.
 
 ## Abrir no navegador (não precisa instalar nada)
